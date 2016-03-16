@@ -14,10 +14,15 @@
 </head>
 
 <body>
-<!-- 
-  <p><%= @successful %> <%= @message %></p>
-  <p><a href='<%= @link %>' target="_blank">Click here for more</a></p>
- -->
+
+  <!-- TO DO? use conditional tags instead of logic in the app/controller? -->
+  <!-- e.g.: -->
+<!-- <% if @subscription_created %>
+ <p>appropriate subscription text</p>
+<% else %>
+ <p>appropriate transaction text</p>
+<% end %> -->
+
   <h3>Thank you for your donation</h3>
   <p>Your transaction was <%= @successful %>. <%= @message %></p>
   <p><%= @subscription_message %></p>

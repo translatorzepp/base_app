@@ -102,6 +102,7 @@ post '/create_transaction' do
     # Transaction created successfully
         @successful = "successful"
         @message = "Transaction created."
+        # TO DO?: use conditional tags in the erb/view instead of logic here?
         if result.subscription
             @link = 'https://sandbox.braintreegateway.com/merchants/' + MERCHANT_ID + '/transactions/' + result.subscription.transactions[0].id
             @subscription_message = "You are signed up for a subscription. Next bill date: " + result.subscription.next_billing_date + " for " + result.subscription.price.to_s + " on the \"" + result.subscription.plan_id + "\" plan."
