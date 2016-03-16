@@ -1,8 +1,8 @@
-require "~/Documents/API/treebrain-integrations/bellsandwhistles/bellsandwhistles-auto.rb"
+require "./autoloader_braintree_config.rb"
 
 get '/' do
 
-    erb :bellsandwhistleschooseyourownadventure
+    erb :chooseyourownadventure
 
 end
 
@@ -47,7 +47,7 @@ post '/checkout' do
         :customer_id => customer
     )
 
-    erb :bellsandwhistlescheckout
+    erb :checkout
 
 end
 
@@ -130,58 +130,9 @@ post '/create_transaction' do
         end
     end
 
-    erb :bellsandwhistlesresult
+    erb :result
 
 end
-
-       # # TEST IF THIS WORKS
-    # if trans = result.transaction
-    #     id = result.transaction.id
-    #     @link = 'https://sandbox.braintreegateway.com/merchants/ryqy4yyw7m5bf92h/transactions/' + id
-    #     if result.success?
-    #         # Successful Transaction
-    #     else
-    #         @message = result.message
-    #         # Unsuccessful Transaction
-    # else
-    #     # Validation Error
-    # end
-
-
-    # if result.transaction does not exist
-    #     validation error
-    #     message = result.message
-    #     successful = Failure
-
-
-
-   # if result.message
-   #      @message = result.message
-
-
-    # elsif result.transaction
-    # # Transaction created unsuccessfully (transaction created but processor declined or gateway rejected)
-    #     @successful = "Failure!"
-    #     @link = 'https://sandbox.braintreegateway.com/merchants/ryqy4yyw7m5bf92h/transactions/' + id
-    #     if result.transaction.status == "processor_declined"
-    #         @message = result.message + "."
-    #     elsif result.transaction.status == "gateway_rejected"
-    #         @mm
-    #     end
-    # else
-    #     # transaction not created
-    #     @successful = "Failure!"
-    #     @message = result.message
-    #     @link = 'https://developers.braintreepayments.com/'
-    # # TO DO: ADD RESULT HANDLING FOR DECLINE/REJECTION VS VALIDATION ERROR
-    # end
-
-    # @successful = "Success!"
-    # @message = "Transaction created."
-    # @id = result.transaction.id
-
-
-
 
 # post '/cancel_subscription' do
 
