@@ -1,0 +1,37 @@
+<html>
+
+<head>
+
+  <style>
+    .form-element {
+      width: 220px;
+    }
+    body {
+      font-family: monospace;
+    }
+  </style>
+
+</head>
+
+<body>
+<!-- 
+  <p><%= @successful %> <%= @message %></p>
+  <p><a href='<%= @link %>' target="_blank">Click here for more</a></p>
+ -->
+  <h3>Thank you for your donation</h3>
+  <p>Your transaction was <%= @successful %>. <%= @message %></p>
+  <p><%= @subscription_message %></p>
+  <p><a href='<%= @link %>' target="_blank">Click here for more information</a></p>
+  <p><a href='<%= "/" %>'>Give more</a></p>
+
+  <p> </p>
+
+</body>
+
+<!-- <script>
+    $.post( "/cancel_subscription", function(data) {
+      $(".result").html(data);
+  });
+</script> -->
+
+</html>

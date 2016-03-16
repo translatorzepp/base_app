@@ -1,0 +1,42 @@
+<head>
+
+  <style>
+    .form-element {
+      width: 220px;
+    }
+    body {
+      font-family: monospace;
+    }
+    input, select {
+      font-family: inherit;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <h3>Welcome to the Anti-Dyad Institute, and thank you for giving us your money to fight irresponsible cloning.</h3>
+
+  <form id="choose-your-own-adventure" action="/checkout" method="post">
+
+    <p>
+      Are you an existing customer?
+      <select name="customer" id="customer">Existing Customer
+        <option value="<%= DO_NOT_STORE_CUSTOMER %>">I do not want to exist</option>
+        <option value="<%= CREATE_NEW_CUSTOMER %>">I do not yet exist</option>
+        <option value="sarah">Sarah Manning</option>
+        <option value="cosima">Cosima Neihaus</option>
+        <option value="alison">Alison Hendrix</option>
+        <option value="felix">Felix</option>
+        <option value="helena">Helena</option>
+      </select>
+    </p>
+
+    <p>
+      <input type="submit" value="Continue">
+    </p>
+
+  </form>
+
+</body>
