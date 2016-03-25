@@ -2,7 +2,7 @@ A basic multi-page checkout app, using [Braintree]("https://developers.braintree
 
 <h4>Before using:</h4>
 
-+ Verify that all files are present and in the following directory structure:
+Verify that all files are present and in the following directory structure:
 ```
 autoloader_braintree_config.rb
 single_page_app.rb
@@ -10,9 +10,9 @@ views
 	single_page_checkout.erb
 	single_page_result.erb
 ```
-+ Make sure rubygems, braintree, and sinatra are installed and up-to-date
- + This app was created with braintree v. 2.56.0-2.58.0, but should run with most recent versions of the gem. Minimum version: 2.43.0
- + See [developers.braintreepayments.com/start/hello-server/ruby]("developers.braintreepayments.com/start/hello-server/ruby") for Braintree's requirements for Ruby version, etc
+Make sure rubygems, braintree, and sinatra are installed and up-to-date
++ This app was created with braintree v. 2.56.0-2.58.0, but should run with most recent versions of the gem. Minimum version: 2.43.0
++ See [developers.braintreepayments.com/start/hello-server/ruby]("developers.braintreepayments.com/start/hello-server/ruby") for Braintree's requirements for Ruby version, etc
 
 
 <h4>To use:</h4>
