@@ -15,9 +15,9 @@ views
  + See [developers.braintreepayments.com/start/hello-server/ruby]("developers.braintreepayments.com/start/hello-server/ruby") for Braintree's requirements for Ruby version, etc
 
 
- <h4>To use:</h4>
+<h4>To use:</h4>
 
- Run app.rb from the command line with
+Run app.rb from the command line with
 
  `shotgun app.rb`
 
@@ -32,9 +32,9 @@ and visit the appropriate localhost address. Choose an existing customer, to be 
 
 *app*: on first loading, presents customer selection page
 
-*chooseyourownadventure*: customer selection page
+*chooseyourownadventure*: page with customer selection form
 
-on submission of this form, *app*:
+*app*: on submission of the *chooseyourownadventure* form,
 + decides whether or not to show the subscription option
 + creates a customer if new customer was selected
 + checks that the selected customer exists if an existing customer was selected
@@ -47,7 +47,7 @@ on submission of this form, *app*:
 + provides an amount and currency selector, and a checkbox to create a subscription (unless no customer has been selected)
 + implements the Drop-in with customer ID with PayPal New Vault and 3D Secure
 
-on submission of checkout form, *app*:
+*app*: on submission of the Drop-in form,
 + checks the selected currency and grabs the appropriate merchant account ID and plan ID
 + if a subscription was selected, create a subscription with the specified parameters
 + if not, creates a transaction
