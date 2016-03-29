@@ -9,7 +9,7 @@ end
 post '/checkout' do 
 
     customer = params[:customer]
-    @show_subscription_checkbox = true
+    @present_subscription_checkbox = true
     case customer
     when CREATE_NEW_CUSTOMER
         # TO DO: wrap in try-catch; if exception, location.reload(true); ???
@@ -19,13 +19,14 @@ post '/checkout' do
     when DO_NOT_STORE_CUSTOMER
         customer = "" # this is OK, because if you generate a client token with the customer ID as the empty string, it treats it as if you hadn't passed in a customer ID at all
         @customer_name = "Non-Existent Customer"
-        @show_subscription_checkbox = false
+        @present_subscription_checkbox = false
     else
         # TO DO: wrap in try-catch; if exception, location.reload(true);
         # verify that the customer exists:
         result = Braintree::Customer.find(customer)
         @customer_name = result.first_name + " " + result.last_name
-        # TO DO: will this return an exception if there are no transactions? 
+        # TO DO: will this return an exception if there are no transactions?
+        # Testing suggests no!
         transaction_history = Braintree::Transaction.search do |search|
           search.customer_id.is customer
           search.status.in(
@@ -35,8 +36,9 @@ post '/checkout' do
           )
         end
         last_transaction = transaction_history.first
-        # TO DO: fix amount.to_s returning the number in scientific notation :D
-        @last_transaction_info = "Your last transaction was on " + last_transaction.created_at.to_s + " for " + last_transaction.amount.to_s + " " + last_transaction.currency_iso_code
+        # convert amount to money-friendly notation
+        amount = sprintf('%.2f', last_transaction.amount) 
+        @last_transaction_info = "Your last transaction was on " + last_transaction.created_at.to_s + " for " + amount + " " + last_transaction.currency_iso_code
         if last_transaction.subscription_id
             @last_transaction_info = @last_transaction_info + ", from subscription ID \"" + last_transaction.subscription_id + "\""
         end

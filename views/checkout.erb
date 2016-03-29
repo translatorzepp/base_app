@@ -8,6 +8,7 @@
   <style>
     .form-element {
       width: 33%;
+      word-wrap: break-word;
     }
     .hosted-container {
       height: 20px;
@@ -40,7 +41,7 @@
         <option value="GBP">GBP</option>
       </select>
     </p>
-    <p> <%= @last_transaction_info %> </p>
+    <p class="form-element"> <%= @last_transaction_info %> </p>
 
     <div id="dropin-container" class="form-element"></div>
 
@@ -76,12 +77,10 @@
   <script src="https://js.braintreegateway.com/js/braintree-2.20.0.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-
   <script>
     $(document).ready(function() {
-      console.log("show_subscription_checkbox: <%= @show_subscription_checkbox %>");
-      if ("<%= @show_subscription_checkbox %>" === "true") {
-        console.log("evaluated to true")
+      console.log("present_subscription_checkbox: <%= @present_subscription_checkbox %>");
+      if ("<%= @present_subscription_checkbox %>" === "true") {
         $("#subscription").prop("disabled", false);
       }
     });

@@ -2,13 +2,14 @@
 
   <style>
     .form-element {
-      width: 220px;
+      width: 33%;
+    }
+    .hosted-container {
+      height: 20px;
+      background-color: #C8D6E8;
     }
     body {
       font-family: monospace;
-    }
-    input, select {
-      font-family: inherit;
     }
   </style>
 
@@ -20,7 +21,7 @@
 
   <form id="choose-your-own-adventure" action="/checkout" method="post">
 
-    <p>
+    <p class="form-element">
       Are you an existing customer?
       <select name="customer" id="customer">Existing Customer
         <option value="<%= DO_NOT_STORE_CUSTOMER %>">I do not want to exist</option>
