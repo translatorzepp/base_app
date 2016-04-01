@@ -19,14 +19,15 @@ post '/checkout' do
     when DO_NOT_STORE_CUSTOMER
         customer = "" # this is OK, because if you generate a client token with the customer ID as the empty string, it treats it as if you hadn't passed in a customer ID at all
         @customer_name = "Non-Existent Customer"
+        # Because no customer exists, we'll disable the create subscription checkbox option:
         @present_subscription_checkbox = false
     else
-        # TO DO: wrap in try-catch; if exception, location.reload(true);
         # verify that the customer exists:
+        # TO DO: wrap in try-catch; if exception, location.reload(true);
         result = Braintree::Customer.find(customer)
         @customer_name = result.first_name + " " + result.last_name
-        # TO DO: will this return an exception if there are no transactions?
-        # Testing suggests no!
+        # retrieve customer sucessful transaction history:
+        # TO DO: will this return an exception if there are no transactions? Answer: yes it will.
         transaction_history = Braintree::Transaction.search do |search|
           search.customer_id.is customer
           search.status.in(
@@ -35,12 +36,16 @@ post '/checkout' do
             Braintree::Transaction::Status::Settled,
           )
         end
-        last_transaction = transaction_history.first
-        # convert amount to money-friendly notation
-        last_transaction_amount_in_money = sprintf('%.2f', last_transaction.amount) 
-        @last_transaction_info = "Your last transaction was on " + last_transaction.created_at.to_s + " for " + last_transaction_amount_in_money + " " + last_transaction.currency_iso_code
-        if last_transaction.subscription_id
-            @last_transaction_info = @last_transaction_info + ", from subscription ID \"" + last_transaction.subscription_id + "\""
+        if transaction_history.first
+            last_transaction = transaction_history.first
+            # convert amount to money-friendly notation
+            last_transaction_amount_in_money = sprintf('%.2f', last_transaction.amount) 
+            @last_transaction_info = "Your last transaction was on " + last_transaction.created_at.to_s + " for " + last_transaction_amount_in_money + " " + last_transaction.currency_iso_code
+            if last_transaction.subscription_id
+                @last_transaction_info = @last_transaction_info + ", from subscription ID \"" + last_transaction.subscription_id + "\""
+            end
+        else
+            @last_transaction_info = "You have no previous transactions."
         end
 
     end
@@ -59,7 +64,7 @@ post '/create_transaction' do
     currency = params[:currency]
     case currency
     when "USD"
-        currency_matched_plan_id = "crazyscience"
+        currency_matched_plan_id = "improvisedweaponofthemonth"
         currency_matched_merchant_account_id = MERCHANT_ACCOUNT_ID_USD
     when "CAD"
         currency_matched_plan_id = "cloneclub"
@@ -70,10 +75,8 @@ post '/create_transaction' do
     when "EUR"
         currency_matched_plan_id = "noIRBapproval"
         currency_matched_merchant_account_id = MERCHANT_ACCOUNT_ID_EUR
-    else
+    # else
         # TO DO: error handling
-        currency_matched_plan_id = "improvisedweaponofthemonth"
-        currency_matched_merchant_account_id = MERCHANT_ACCOUNT_ID_USD
     end
 
     create_subscription = params[:subscription]
@@ -108,7 +111,7 @@ post '/create_transaction' do
         if result.subscription
             @link = 'https://sandbox.braintreegateway.com/merchants/' + MERCHANT_ID + '/transactions/' + result.subscription.transactions[0].id
             resulting_subscription_price_in_money = sprintf('%.2f', result.subscription.price) 
-            @subscription_message = "You are signed up for a subscription. Next bill date: " + result.subscription.next_billing_date + " for " + resulting_subscription_price + " on the \"" + result.subscription.plan_id + "\" plan."
+            @subscription_message = "You are signed up for a subscription. Next bill date: " + result.subscription.next_billing_date + " for " + resulting_subscription_price_in_money + " on the \"" + result.subscription.plan_id + "\" plan."
         else
             @link = 'https://sandbox.braintreegateway.com/merchants/' + MERCHANT_ID + '/transactions/' + result.transaction.id
             @subscription_message = "You are not signed up for a subscription."
@@ -118,7 +121,7 @@ post '/create_transaction' do
         @message = result.message
         if result.transaction
             # Transaction created unsuccessfully
-            # TO DO: this @link = is a duplicate line with an above condition. figure out a way to consolidate.
+            # TO DO: this @link = is a duplicate line with an above condition. figure out if there's a way to consolidate.
             # TO DO: in fact, figure out better error handling structure in general
             @link = 'https://sandbox.braintreegateway.com/merchants/' + MERCHANT_ID + '/transactions/' + result.transaction.id
             if result.transaction.status === Braintree::Transaction::Status::ProcessorDeclined
