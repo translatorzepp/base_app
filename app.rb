@@ -37,8 +37,8 @@ post '/checkout' do
         end
         last_transaction = transaction_history.first
         # convert amount to money-friendly notation
-        amount = sprintf('%.2f', last_transaction.amount) 
-        @last_transaction_info = "Your last transaction was on " + last_transaction.created_at.to_s + " for " + amount + " " + last_transaction.currency_iso_code
+        last_transaction_amount_in_money = sprintf('%.2f', last_transaction.amount) 
+        @last_transaction_info = "Your last transaction was on " + last_transaction.created_at.to_s + " for " + last_transaction_amount_in_money + " " + last_transaction.currency_iso_code
         if last_transaction.subscription_id
             @last_transaction_info = @last_transaction_info + ", from subscription ID \"" + last_transaction.subscription_id + "\""
         end
@@ -107,7 +107,8 @@ post '/create_transaction' do
         # TO DO?: use conditional tags in the erb/view instead of logic here?
         if result.subscription
             @link = 'https://sandbox.braintreegateway.com/merchants/' + MERCHANT_ID + '/transactions/' + result.subscription.transactions[0].id
-            @subscription_message = "You are signed up for a subscription. Next bill date: " + result.subscription.next_billing_date + " for " + result.subscription.price.to_s + " on the \"" + result.subscription.plan_id + "\" plan."
+            resulting_subscription_price_in_money = sprintf('%.2f', result.subscription.price) 
+            @subscription_message = "You are signed up for a subscription. Next bill date: " + result.subscription.next_billing_date + " for " + resulting_subscription_price + " on the \"" + result.subscription.plan_id + "\" plan."
         else
             @link = 'https://sandbox.braintreegateway.com/merchants/' + MERCHANT_ID + '/transactions/' + result.transaction.id
             @subscription_message = "You are not signed up for a subscription."
