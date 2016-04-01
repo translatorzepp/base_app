@@ -12,7 +12,7 @@ post '/checkout' do
     @present_subscription_checkbox = true
     case customer
     when CREATE_NEW_CUSTOMER
-        # TO DO: wrap in try-catch; if exception, location.reload(true); ???
+        # TO DO: wrap in try-catch
         result = Braintree::Customer.create!()
         customer = result.id
         @customer_name = "New Customer"
@@ -27,7 +27,6 @@ post '/checkout' do
         result = Braintree::Customer.find(customer)
         @customer_name = result.first_name + " " + result.last_name
         # retrieve customer sucessful transaction history:
-        # TO DO: will this return an exception if there are no transactions? Answer: yes it will.
         transaction_history = Braintree::Transaction.search do |search|
           search.customer_id.is customer
           search.status.in(
@@ -122,10 +121,8 @@ post '/create_transaction' do
         if result.transaction
             # Transaction created unsuccessfully
             # TO DO: this @link = is a duplicate line with an above condition. figure out if there's a way to consolidate.
-            # TO DO: in fact, figure out better error handling structure in general
             @link = 'https://sandbox.braintreegateway.com/merchants/' + MERCHANT_ID + '/transactions/' + result.transaction.id
             if result.transaction.status === Braintree::Transaction::Status::ProcessorDeclined
-                # Were I a real merchant: BIN lookup to identify bank and point customer to call
                 @message = @message + ": try again later."
             elsif result.transaction.status === Braintree::Transaction::Status::GatewayRejected
                 @message = @message + ": check your payment information and try again."
@@ -140,10 +137,3 @@ post '/create_transaction' do
     erb :result
 
 end
-
-# TO DO: add route 
-# post '/cancel_subscription' do
-
-#     sub_to_cancel = params[:]
-
-# end

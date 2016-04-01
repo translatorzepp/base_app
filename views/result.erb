@@ -1,11 +1,9 @@
+<!DOCTYPE html>
 <html>
 
 <head>
 
   <style>
-    .form-element {
-      width: 220px;
-    }
     body {
       font-family: monospace;
     }
@@ -15,28 +13,16 @@
 
 <body>
 
-  <!-- TO DO? use conditional tags instead of logic in the app/controller? -->
-  <!-- e.g.: -->
-<!-- <% if @subscription_created %>
- <p>appropriate subscription text</p>
-<% else %>
- <p>appropriate transaction text</p>
-<% end %> -->
+  <!-- TO DO? use conditional tags (e.g. % if @subscription_created %>) instead of logic in the app/controller? -->
 
   <h3>Thank you</h3>
   <p>Your transaction was <%= @successful %>. <%= @message %></p>
   <p><%= @subscription_message %></p>
-  <p><a href='<%= @link %>' target="_blank">Click here for more information</a></p>
+  <p><a href='<%= @link %>' target='_blank'>Click here for more information</a></p>
   <p><a href='<%= "/" %>'>Give more</a></p>
 
   <p> </p>
 
 </body>
-
-<!-- <script>
-    $.post( "/cancel_subscription", function(data) {
-      $(".result").html(data);
-  });
-</script> -->
 
 </html>
