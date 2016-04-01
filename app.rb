@@ -121,7 +121,7 @@ post '/create_transaction' do
             # TO DO: in fact, figure out better error handling structure in general
             @link = 'https://sandbox.braintreegateway.com/merchants/' + MERCHANT_ID + '/transactions/' + result.transaction.id
             if result.transaction.status === Braintree::Transaction::Status::ProcessorDeclined
-                # BIN lookup to identify bank and point customer to call
+                # Were I a real merchant: BIN lookup to identify bank and point customer to call
                 @message = @message + ": try again later."
             elsif result.transaction.status === Braintree::Transaction::Status::GatewayRejected
                 @message = @message + ": check your payment information and try again."
@@ -137,6 +137,7 @@ post '/create_transaction' do
 
 end
 
+# TO DO: add route 
 # post '/cancel_subscription' do
 
 #     sub_to_cancel = params[:]
