@@ -1,4 +1,4 @@
-A basic multi-page checkout app, using [Braintree]("https://developers.braintreepayments.com"). Implements the Drop-in User Interface with customer ID, PayPal New Vault flow, 3D Secure, transactions and subscriptions, device data.
+A basic multi-page checkout app, using [Braintree]("https://developers.braintreepayments.com"). Implements the legacy Drop-in User Interface with customer ID, PayPal New Vault flow, 3D Secure, transactions and subscriptions, device data.
 
 <h4>Before using:</h4>
 
